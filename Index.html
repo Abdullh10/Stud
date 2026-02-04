@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة مشاريع طلاب الكيمياء النوعية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* أنماط عامة */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+        }
+        
+        :root {
+            --primary-color: #2c8cff;
+            --secondary-color: #0d5bb5;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --light-bg: #f5f9ff;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --text-light: #666;
+            --border-radius: 15px;
+            --box-shadow: 0 5px 15px rgba(0, 100, 200, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-bottom: 40px;
+        }
+        
+        /* رأس الصفحة */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        header h1 i {
+            font-size: 2rem;
+        }
+        
+        .teacher-info {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+        
+        /* حاوية المحتوى الرئيسي */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* قسم المجموعات */
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .section-title i {
+            color: var(--primary-color);
+        }
+        
+        .intro-text {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            box-shadow: var(--box-shadow);
+            border-right: 5px solid var(--primary-color);
+        }
+        
+        /* شبكة المجموعات */
+        .groups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .group-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            border-top: 5px solid var(--primary-color);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .group-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 100, 200, 0.15);
+        }
+        
+        .group-card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .group-card h3 i {
+            color: var(--primary-color);
+        }
+        
+        .group-meta {
+            margin-bottom: 20px;
+        }
+        
+        .group-meta p {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .group-meta i {
+            color: var(--primary-color);
+            width: 20px;
+        }
+        
+        .members-list {
+            background-color: #f0f8ff;
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+        
+        .members-list span {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            margin: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            margin-top: auto;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        
+        .btn i {
+            margin-left: 8px;
+        }
+        
+        /* قسم الاختبار التفاعلي */
+        .quiz-container {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 40px;
+            display: none;
+        }
+        
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .quiz-title {
+            color: var(--secondary-color);
+            font-size: 1.4rem;
+        }
+        
+        .back-btn {
+            background-color: #f8f9fa;
+            color: var(--text-color);
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .back-btn:hover {
+            background-color: #e9ecef;
+        }
+        
+        .progress-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            background-color: #f0f8ff;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .points-display, .level-display {
+            text-align: center;
+        }
+        
+        .points-display h4, .level-display h4 {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+        
+        .points-value, .level-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .question-box {
+            background-color: #f8fbff;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border-right: 4px solid var(--primary-color);
+        }
+        
+        .question-box h3 {
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+        
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+        
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background-color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid #e9ecef;
+        }
+        
+        .option:hover {
+            background-color: #f0f8ff;
+            border-color: var(--primary-color);
+        }
+        
+        .option input {
+            margin-left: 10px;
+            transform: scale(1.2);
+        }
+        
+        .option label {
+            flex-grow: 1;
+            cursor: pointer;
+            font-size: 1.05rem;
+        }
+        
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .feedback-box {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 25px;
+            display: none;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .correct-feedback {
+            color: var(--success-color);
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .incorrect-feedback {
+            color: var(--danger-color);
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .concept-explanation {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .concept-explanation h4 {
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+        
+        /* قسم المحاكاة والفيديو */
+        .resources-section {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+            margin-top: 30px;
+            display: none;
+        }
+        
+        .resources-section h3 {
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .video-container {
+            background-color: #f0f8ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .video-container p {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .video-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            background-color: white;
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+        
+        .video-link:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .phet-container {
+            background-color: #f0f8ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        .phet-container h4 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .phet-frame {
+            width: 100%;
+            height: 400px;
+            border: none;
+            border-radius: 8px;
+            background-color: white;
+        }
+        
+        /* قسم ملاحظات المعلم */
+        .teacher-section {
+            background-color: #fff9e6;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-top: 40px;
+            border-right: 5px solid var(--warning-color);
+            box-shadow: var(--box-shadow);
+        }
+        
+        .teacher-section h3 {
+            color: #856404;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* تذييل الصفحة */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #dee2e6;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        /* تجاوب مع الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .groups-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .progress-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .quiz-controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .quiz-controls .btn {
+                width: 100%;
+            }
+            
+            .phet-frame {
+                height: 300px;
+            }
+            
+            header h1 {
+                font-size: 1.5rem;
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+        
+        /* ألوان خاصة بالمجموعات */
+        .group-1 { border-top-color: #2c8cff; }
+        .group-2 { border-top-color: #28a745; }
+        .group-3 { border-top-color: #ffc107; }
+        .group-4 { border-top-color: #dc3545; }
+        .group-5 { border-top-color: #6f42c1; }
+        .group-6 { border-top-color: #17a2b8; }
+    </style>
+</head>
+<body>
+    <!-- رأس الصفحة -->
+    <header>
+        <div class="container">
+            <h1>
+                <i class="fas fa-flask"></i>
+                منصة مشاريع الطلاب النوعية في الكيمياء
+            </h1>
+            <p class="teacher-info">
+                تحت إشراف المعلم المتقدم: الأستاذ عبدالله بن محمد حمدي
+            </p>
+        </div>
+    </header>
+    
+    <!-- المحتوى الرئيسي -->
+    <div class="container">
+        <!-- قسم المجموعات (الصفحة الرئيسية) -->
+        <div id="groupsPage">
+            <h2 class="section-title">
+                <i class="fas fa-users"></i>
+                مجموعات التحليل التعليمي
+            </h2>
+            
+            <div class="intro-text">
+                <p>تم تقسيم طلاب كيمياء ١ إلى مجموعات مكونة من ٥ طلاب. كل مجموعة قامت بتحليل قسم من المقرر وتصميم بنك أسئلة تفاعلي يساعد في التدريب على الاختبار التحصيلي.</p>
+                <p>كل سؤال في المنصة مصمم لتقديم شرح مفصل للإجابة الصحيحة والخاطئة، مع ربطه بمقاطع فيديو وتجارب افتراضية من موقع PhET لتعزيز الفهم.</p>
+            </div>
+            
+            <div class="groups-grid" id="groupsList">
+                <!-- سيتم ملء المجموعات بواسطة JavaScript -->
+            </div>
+            
+            <div class="teacher-section">
+                <h3><i class="fas fa-chalkboard-teacher"></i> ملاحظات المعلم</h3>
+                <p>المنصة تهدف إلى تحويل الطلاب من متلقين للمعلومة إلى مشاركين في بنائها. كل مجموعة صممت محتوى تفاعلياً لوحدتها الدراسية، مع مراعاة الفروق الفردية من خلال التغذية الراجعة المفصلة عند كل إجابة.</p>
+                <p>عند إجابة الطالب خطأ، تظهر له: ١) شرح للمفهوم، ٢) مقطع فيديو تعليمي، ٣) تجربة افتراضية تفاعلية، ٤) نقاط تشجيعية للتقدم.</p>
+            </div>
+        </div>
+        
+        <!-- قسم الاختبار التفاعلي (يظهر عند اختيار مجموعة) -->
+        <div id="quizPage" class="quiz-container">
+            <div class="quiz-header">
+                <h2 class="quiz-title" id="quizGroupName"></h2>
+                <a href="#" class="back-btn" id="backToGroups">
+                    <i class="fas fa-arrow-right"></i> العودة إلى المجموعات
+                </a>
+            </div>
+            
+            <div class="progress-container">
+                <div class="points-display">
+                    <h4>النقاط</h4>
+                    <div class="points-value" id="studentPoints">0</div>
+                </div>
+                
+                <div class="level-display">
+                    <h4>المستوى</h4>
+                    <div class="level-value" id="studentLevel">مبتدئ</div>
+                </div>
+                
+                <div class="progress-display">
+                    <h4>التقدم</h4>
+                    <div id="questionProgress">1/5</div>
+                </div>
+            </div>
+            
+            <div class="question-box" id="questionBox">
+                <!-- سيتم عرض الأسئلة هنا -->
+            </div>
+            
+            <div class="quiz-controls">
+                <button class="btn" id="checkAnswerBtn">
+                    <i class="fas fa-check-circle"></i> تحقق من الإجابة
+                </button>
+                <button class="btn" id="nextQuestionBtn" style="display: none;">
+                    <i class="fas fa-forward"></i> السؤال التالي
+                </button>
+            </div>
+            
+            <div class="feedback-box" id="feedbackBox">
+                <!-- سيتم عرض التغذية الراجعة هنا -->
+            </div>
+            
+            <div class="resources-section" id="resourcesSection">
+                <h3><i class="fas fa-lightbulb"></i> موارد تعليمية للمراجعة</h3>
+                
+                <div class="video-container">
+                    <p><i class="fas fa-video"></i> <strong>فيديو تعليمي مقترح:</strong></p>
+                    <a href="#" target="_blank" class="video-link" id="videoLink">
+                        <i class="fas fa-external-link-alt"></i> شاهد الفيديو التعليمي
+                    </a>
+                </div>
+                
+                <div class="phet-container">
+                    <h4><i class="fas fa-atom"></i> تجربة افتراضية من PhET</h4>
+                    <iframe class="phet-frame" id="phetFrame" src="" title="تجربة PhET الافتراضية"></iframe>
+                </div>
+                
+                <div class="concept-explanation" id="conceptExplanation">
+                    <!-- سيتم عرض شرح المفاهيم هنا -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>© 2023 منصة مشاريع الطلاب النوعية في الكيمياء - تصميم تحت إشراف الأستاذ عبدالله بن محمد حمدي</p>
+            <p>جميع محتويات المنصة من تصميم وإعداد طلاب كيمياء ١</p>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script>
+        // بيانات المجموعات
+        const studentGroups = [
+            {
+                id: 1,
+                name: "مجموعة الذرة والتركيب الإلكتروني",
+                members: ["خالد أحمد", "تميم محمد", "فهد عبدالله", "سعيد القحطاني", "محمد السعيد"],
+                analyzedChapter: "الوحدة ٢: التركيب الذري والنظائر",
+                colorClass: "group-1"
+            },
+            {
+                id: 2,
+                name: "مجموعة الروابط الكيميائية",
+                members: ["فهد العتيبي", "أحمد الغامدي", "محمد الحربي", "عبدالعزيز الفوزان", "حمد الشمري"],
+                analyzedChapter: "الوحدة ٣: الروبات الكيميائية والمركبات",
+                colorClass: "group-2"
+            },
+            {
+                id: 3,
+                name: "مجموعة التفاعلات الكيميائية",
+                members: ["عمر الراشد", "نواف الدوسري", "بدر العصيمي", "علي المطيري", "فيصل النافع"],
+                analyzedChapter: "الوحدة ٤: التفاعلات الكيميائية والمعادلات",
+                colorClass: "group-3"
+            },
+            {
+                id: 4,
+                name: "مجموعة الحسابات الكيميائية",
+                members: ["حمد السعدون", "تركي البلوي", "عبدالاله الزهراني", "نايف الجهني", "محمد السعيد
+                analyzedChapter: "الوحدة ٥: المول والحسابات الكيميائية",
+                colorClass: "group-4"
+            },
+            {
+                id: 5,
+                name: "مجموعة حالات المادة",
+                members: ["سعد الحمود", "سعيد الشهراني", "محمد الشهري", "ناصر الحارثي", "محمد السفياني"],
+                analyzedChapter: "الوحدة ٦: حالات المادة والتغيرات",
+                colorClass: "group-5"
+            },
+            {
+                id: 6,
+                name: "مجموعة المحاليل والتركيز",
+                members: ["علي الناصر", "تميم المالكي", "محمد العلي", "وليد محمد", "محمد الغامدي"],
+                analyzedChapter: "الوحدة ٧: المحاليل والتركيز",
+                colorClass: "group-6"
+            }
+        ];
+
+        // بنك الأسئلة لكل مجموعة
+        const questionBanks = {
+            1: [
+                {
+                    question: "ما العدد الأقصى للإلكترونات في المستوى الرئيسي الثالث (n=3)؟",
+                    options: ["٢ إلكترون", "٨ إلكترونات", "١٨ إلكترون", "٣٢ إلكترون"],
+                    correctAnswer: 2, // الفهرس 2 يعني الخيار الثالث (١٨ إلكترون)
+                    explanation: {
+                        correct: "إجابة صحيحة! القانون هو ٢n² حيث n رقم المستوى. إذن ٢ × (٣)² = ٢ × ٩ = ١٨ إلكترونًا كحد أقصى.",
+                        incorrect: "إجابة غير صحيحة. تذكر قانون الإلكترونات في المستوى: ٢n²، حيث n هو رقم المستوى الرئيسي. للمستوى الثالث: ٢ × (٣)² = ٢ × ٩ = ١٨ إلكترونًا.",
+                        concept: "سعة المستويات الإلكترونية وقانون ٢n². كل مستوى رئيسي له سعة إلكترونية محددة تحسب بهذا القانون.",
+                        videoLink: "https://www.youtube.com/watch?v=kfZtcw7Ba78",
+                        phetSim: "https://phet.colorado.edu/sims/html/build-an-atom/latest/build-an-atom_ar.html"
+                    }
+                },
+                {
+                    question: "ما عدد البروتونات في نواة ذرة الصوديوم (العدد الذري ١١)؟",
+                    options: ["١٠ بروتونات", "١١ بروتون", "١٢ بروتون", "٢٣ بروتون"],
+                    correctAnswer: 1,
+                    explanation: {
+                        correct: "إجابة صحيحة! العدد الذري يمثل عدد البروتونات في النواة، لذا لذرة الصوديوم ١١ بروتون.",
+                        incorrect: "إجابة غير صحيحة. تذكر أن العدد الذري لأي عنصر يساوي عدد البروتونات في نواته. العدد الذري للصوديوم هو ١١، إذن له ١١ بروتون.",
+                        concept: "العدد الذري وعلاقته بعدد البروتونات. العدد الذري هو العدد المميز للعنصر ويحدد هويته.",
+                        videoLink: "https://www.youtube.com/watch?v=6w74H9U6wBo",
+                        phetSim: "https://phet.colorado.edu/sims/html/isotopes-and-atomic-mass/latest/isotopes-and-atomic-mass_ar.html"
+                    }
+                }
+            ],
+            2: [
+                {
+                    question: "أي نوع من الروابط ينتج عن مشاركة الذرات بالإلكترونات؟",
+                    options: ["الرابط الأيوني", "الرابط التساهمي", "الرابط الفلزي", "رابط فان دير فالس"],
+                    correctAnswer: 1,
+                    explanation: {
+                        correct: "إجابة صحيحة! الرابط التساهمي يتكون عن طريق مشاركة زوج أو أكثر من الإلكترونات بين الذرات.",
+                        incorrect: "إجابة غير صحيحة. الرابط الذي ينشأ عن مشاركة الإلكترونات بين الذرات هو الرابط التساهمي، أما الأيوني فينتج عن انتقال الإلكترونات.",
+                        concept: "الروابط التساهمية وتكوينها عن طريق المشاركة بالإلكترونات لتحقيق الاستقرار الإلكتروني.",
+                        videoLink: "https://www.youtube.com/watch?v=_qOGwx6MTUA",
+                        phetSim: "https://phet.colorado.edu/sims/html/molecule-shapes/latest/molecule-shapes_ar.html"
+                    }
+                }
+            ],
+            3: [
+                {
+                    question: "عند تفاعل الحديد مع الكبريت، أي مما يلي يصف نوع التفاعل؟",
+                    options: ["تفاعل تكوين", "تفاعل احتراق", "تفاعل تحلل", "تفاعل إحلال مزدوج"],
+                    correctAnswer: 0,
+                    explanation: {
+                        correct: "إجابة صحيحة! تفاعل الحديد مع الكبريت لتكوين كبريتيد الحديد هو تفاعل تكوين حيث يتحد عنصران لتكوين مركب واحد.",
+                        incorrect: "إجابة غير صحيحة. تفاعل عنصرين لتكوين مركب واحد يصنف كتفاعل تكوين (مثل Fe + S → FeS).",
+                        concept: "تفاعلات التكوين (الاتحاد المباشر) حيث يتحد عنصران أو أكثر لتكوين مركب واحد جديد.",
+                        videoLink: "https://www.youtube.com/watch?v=aAWGGLv7h9E",
+                        phetSim: "https://phet.colorado.edu/sims/html/reactants-products-and-leftovers/latest/reactants-products-and-leftovers_ar.html"
+                    }
+                }
+            ]
+        };
+
+        // حالة التطبيق
+        let currentState = {
+            currentPage: 'groups', // 'groups' أو 'quiz'
+            currentGroupId: null,
+            currentQuestionIndex: 0,
+            studentPoints: 0,
+            studentLevel: 'مبتدئ'
+        };
+
+        // DOM Elements
+        const groupsPage = document.getElementById('groupsPage');
+        const quizPage = document.getElementById('quizPage');
+        const groupsList = document.getElementById('groupsList');
+        const quizGroupName = document.getElementById('quizGroupName');
+        const studentPointsEl = document.getElementById('studentPoints');
+        const studentLevelEl = document.getElementById('studentLevel');
+        const questionBox = document.getElementById('questionBox');
+        const feedbackBox = document.getElementById('feedbackBox');
+        const resourcesSection = document.getElementById('resourcesSection');
+        const videoLink = document.getElementById('videoLink');
+        const phetFrame = document.getElementById('phetFrame');
+        const conceptExplanation = document.getElementById('conceptExplanation');
+        const checkAnswerBtn = document.getElementById('checkAnswerBtn');
+        const nextQuestionBtn = document.getElementById('nextQuestionBtn');
+        const backToGroups = document.getElementById('backToGroups');
+        const questionProgress = document.getElementById('questionProgress');
+
+        // تهيئة التطبيق
+        function initApp() {
+            displayGroups();
+            setupEventListeners();
+        }
+
+        // عرض المجموعات
+        function displayGroups() {
+            groupsList.innerHTML = '';
+            
+            studentGroups.forEach(group => {
+                const groupCard = document.createElement('div');
+                groupCard.className = `group-card ${group.colorClass}`;
+                
+                groupCard.innerHTML = `
+                    <h3><i class="fas fa-user-friends"></i> ${group.name}</h3>
+                    <div class="group-meta">
+                        <p><i class="fas fa-book-open"></i> <strong>قسم التحليل:</strong> ${group.analyzedChapter}</p>
+                        <p><i class="fas fa-users"></i> <strong>أعضاء المجموعة:</strong></p>
+                        <div class="members-list">
+                            ${group.members.map(member => `<span>${member}</span>`).join('')}
+                        </div>
+                    </div>
+                    <button class="btn start-quiz-btn" data-group-id="${group.id}">
+                        <i class="fas fa-play-circle"></i> بدء الاختبار التفاعلي
+                    </button>
+                `;
+                
+                groupsList.appendChild(groupCard);
+            });
+        }
+
+        // إعداد مستمعي الأحداث
+        function setupEventListeners() {
+            // أحداث لأزرار بدء الاختبار
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('start-quiz-btn') || e.target.closest('.start-quiz-btn')) {
+                    const btn = e.target.classList.contains('start-quiz-btn') ? e.target : e.target.closest('.start-quiz-btn');
+                    const groupId = parseInt(btn.getAttribute('data-group-id'));
+                    startGroupQuiz(groupId);
+                }
+            });
+            
+            // حدث لزر التحقق من الإجابة
+            checkAnswerBtn.addEventListener('click', checkAnswer);
+            
+            // حدث لزر السؤال التالي
+            nextQuestionBtn.addEventListener('click', nextQuestion);
+            
+            // حدث للعودة إلى قائمة المجموعات
+            backToGroups.addEventListener('click', function(e) {
+                e.preventDefault();
+                showGroupsPage();
+            });
+        }
+
+        // بدء اختبار مجموعة
+        function startGroupQuiz(groupId) {
+            currentState.currentPage = 'quiz';
+            currentState.currentGroupId = groupId;
+            currentState.currentQuestionIndex = 0;
+            currentState.studentPoints = 0;
+            currentState.studentLevel = 'مبتدئ';
+            
+            // تحديث واجهة المستخدم
+            updateUI();
+            
+            // إخفاء صفحة المجموعات وإظهار صفحة الاختبار
+            groupsPage.style.display = 'none';
+            quizPage.style.display = 'block';
+            
+            // عرض اسم المجموعة
+            const group = studentGroups.find(g => g.id === groupId);
+            quizGroupName.textContent = group.name;
+            
+            // عرض السؤال الأول
+            displayCurrentQuestion();
+        }
+
+        // عرض السؤال الحالي
+        function displayCurrentQuestion() {
+            const groupId = currentState.currentGroupId;
+            const questionIndex = currentState.currentQuestionIndex;
+            const questions = questionBanks[groupId];
+            
+            if (!questions || questionIndex >= questions.length) {
+                // إذا لم توجد أسئلة أو انتهينا من الأسئلة
+                questionBox.innerHTML = '<h3>تم إكمال جميع الأسئلة لهذه المجموعة!</h3>';
+                checkAnswerBtn.style.display = 'none';
+                nextQuestionBtn.style.display = 'none';
+                return;
+            }
+            
+            const question = questions[questionIndex];
+            
+            // تحديث تقدم الأسئلة
+            questionProgress.textContent = `${questionIndex + 1}/${questions.length}`;
+            
+            // بناء واجهة السؤال
+            let optionsHTML = '';
+            question.options.forEach((option, index) => {
+                optionsHTML += `
+                    <div class="option">
+                        <input type="radio" name="answer" id="option${index}" value="${index}">
+                        <label for="option${index}">${option}</label>
+                    </div>
+                `;
+            });
+            
+            questionBox.innerHTML = `
+                <h3>${question.question}</h3>
+                <div class="options-container">
+                    ${optionsHTML}
+                </div>
+            `;
+            
+            // إخفاء التغذية الراجعة والموارد
+            feedbackBox.style.display = 'none';
+            resourcesSection.style.display = 'none';
+            nextQuestionBtn.style.display = 'none';
+            checkAnswerBtn.style.display = 'block';
+        }
+
+        // التحقق من الإجابة
+        function checkAnswer() {
+            const selectedOption = document.querySelector('input[name="answer"]:checked');
+            const groupId = currentState.currentGroupId;
+            const questionIndex = currentState.currentQuestionIndex;
+            const questions = questionBanks[groupId];
+            const question = questions[questionIndex];
+            
+            if (!selectedOption) {
+                alert('الرجاء اختيار إجابة قبل التحقق!');
+                return;
+            }
+            
+            const selectedAnswer = parseInt(selectedOption.value);
+            const isCorrect = selectedAnswer === question.correctAnswer;
+            
+            // تحديث النقاط
+            if (isCorrect) {
+                currentState.studentPoints += 10;
+                updateStudentLevel();
+            }
+            
+            // عرض التغذية الراجعة
+            feedbackBox.innerHTML = '';
+            
+            if (isCorrect) {
+                feedbackBox.innerHTML += `
+                    <div class="correct-feedback">
+                        <i class="fas fa-check-circle"></i>
+                        ${question.explanation.correct}
+                    </div>
+                `;
+            } else {
+                feedbackBox.innerHTML += `
+                    <div class="incorrect-feedback">
+                        <i class="fas fa-times-circle"></i>
+                        ${question.explanation.incorrect}
+                    </div>
+                `;
+                
+                // عرض الموارد التعليمية عند الإجابة الخاطئة
+                showEducationalResources(question.explanation);
+            }
+            
+            feedbackBox.style.display = 'block';
+            
+            // تحديث واجهة النقاط والمستوى
+            updateUI();
+            
+            // إظهار زر السؤال التالي وإخفاء زر التحقق
+            checkAnswerBtn.style.display = 'none';
+            nextQuestionBtn.style.display = 'block';
+            
+            // تعطيل خيارات الإجابة
+            document.querySelectorAll('.option input').forEach(input => {
+                input.disabled = true;
+            });
+        }
+
+        // عرض الموارد التعليمية
+        function showEducationalResources(explanation) {
+            // تحديث رابط الفيديو
+            videoLink.href = explanation.videoLink;
+            
+            // تحديث إطار PhET
+            phetFrame.src = explanation.phetSim;
+            
+            // تحديث شرح المفهوم
+            conceptExplanation.innerHTML = `
+                <h4><i class="fas fa-graduation-cap"></i> شرح مفصل للمفهوم</h4>
+                <p>${explanation.concept}</p>
+                <p>هذا المفهوم أساسي لفهم ${studentGroups.find(g => g.id === currentState.currentGroupId).analyzedChapter}.</p>
+            `;
+            
+            // إظهار قسم الموارد
+            resourcesSection.style.display = 'block';
+        }
+
+        // الانتقال إلى السؤال التالي
+        function nextQuestion() {
+            const groupId = currentState.currentGroupId;
+            const questions = questionBanks[groupId];
+            
+            currentState.currentQuestionIndex++;
+            
+            if (currentState.currentQuestionIndex < questions.length) {
+                displayCurrentQuestion();
+            } else {
+                // إذا انتهت الأسئلة
+                questionBox.innerHTML = `
+                    <h3>🎉 مبروك! لقد أكملت اختبار المجموعة</h3>
+                    <p>لقد حصلت على <strong>${currentState.studentPoints}</strong> نقطة من أصل <strong>${questions.length * 10}</strong> نقطة ممكنة.</p>
+                    <p>مستواك الحالي: <strong>${currentState.studentLevel}</strong></p>
+                    <p>يمكنك العودة إلى قائمة المجموعات لاختيار مجموعة أخرى، أو إعادة اختبار هذه المجموعة.</p>
+                `;
+                checkAnswerBtn.style.display = 'none';
+                nextQuestionBtn.style.display = 'none';
+                feedbackBox.style.display = 'none';
+                resourcesSection.style.display = 'none';
+            }
+        }
+
+        // تحديث مستوى الطالب بناءً على النقاط
+        function updateStudentLevel() {
+            const points = currentState.studentPoints;
+            
+            if (points >= 50) currentState.studentLevel = 'متوسط';
+            if (points >= 100) currentState.studentLevel = 'متقدم';
+            if (points >= 150) currentState.studentLevel = 'متميز';
+            if (points >= 200) currentState.studentLevel = 'خبير';
+        }
+
+        // تحديث واجهة المستخدم
+        function updateUI() {
+            studentPointsEl.textContent = currentState.studentPoints;
+            studentLevelEl.textContent = currentState.studentLevel;
+        }
+
+        // إظهار صفحة المجموعات
+        function showGroupsPage() {
+            currentState.currentPage = 'groups';
+            groupsPage.style.display = 'block';
+            quizPage.style.display = 'none';
+        }
+
+        // تشغيل التطبيق عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
